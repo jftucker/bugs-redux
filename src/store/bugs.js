@@ -3,6 +3,8 @@ import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
 import moment from "moment";
 
+import axios from "axios";
+
 const slice = createSlice({
   name: "bugs",
   initialState: {
@@ -42,7 +44,7 @@ const slice = createSlice({
   },
 });
 
-const {
+export const {
   bugAdded,
   bugResolved,
   bugAssignedToUser,
@@ -99,7 +101,7 @@ export const assignBugToUser = (bugId, userId) =>
 export const getUnresolvedBugs = createSelector(
   (state) => state.entities.bugs,
   (state) => state.entities.projects,
-  (bugs, projects) => bugs.filter((bug) => !bug.resolved)
+  (bugs, projects) => bugs.list.filter((bug) => !bug.resolved)
 );
 
 export const getBugsByUser = (userId) =>
